@@ -5,8 +5,7 @@
 
 #include "definitions.h"
 #include "mygl.h"
-
-#define GL_CLAMP_TO_EDGE 0x812F
+#define GL_CLAMP_TO_EDGE	0x812F
 
 GLuint tex;
 
@@ -109,4 +108,3 @@ void InitDataStructures(void)
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
-
