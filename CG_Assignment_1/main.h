@@ -5,18 +5,24 @@
 
 #include "definitions.h"
 #include "mygl.h"
-#define GL_CLAMP_TO_EDGE	0x812F
+
+
+
+#define GL_CLAMP_TO_EDGE 0x812F
+
+
 
 GLuint tex;
 
 void(*DrawFunc)(void);
 
-//*****************************************************************************
+
+
 void display(void)
 {
 	DrawFunc();
 
-	// Copia o framebuffer para a textura.
+	// Copia o framebuffer para a textura
 	glBindTexture(GL_TEXTURE_2D, tex);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, IMAGE_WIDTH, IMAGE_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, FBptr);
 
@@ -51,17 +57,15 @@ void display(void)
 	glutPostRedisplay();
 }
 
-//*****************************************************************************
 void exitprog(void)
 {
-	// Libera a memória referente ao framebuffer.
+	// Libera a memória referente ao framebuffer
 	if (!FBptr)
 		delete[] FBptr;
 
 	std::clog << "Exiting...\n";
 }
 
-//*****************************************************************************
 void InitOpenGL(int *argc, char **argv)
 {
 	glutInit(argc, argv);
@@ -78,17 +82,15 @@ void InitOpenGL(int *argc, char **argv)
 	glLoadIdentity();
 }
 
-//*****************************************************************************
 void InitCallBacks(void)
 {
 	atexit(exitprog);
 	glutDisplayFunc(display);
 }
 
-//*****************************************************************************
 void InitDataStructures(void)
 {
-	// Aloca o framebuffer e inicializa suas posições com 0.
+	// Aloca o framebuffer e inicializa suas posições com 0
 	FBptr = new unsigned char[IMAGE_WIDTH * IMAGE_HEIGHT * 5];
 
 	for (unsigned int i = 0; i < IMAGE_WIDTH * IMAGE_HEIGHT; i++)
@@ -99,7 +101,7 @@ void InitDataStructures(void)
 		FBptr[i * 4 + 3] = 255;
 	}
 
-	// Cria uma textura 2D, RGBA (8 bits por componente).
+	// Cria uma textura 2D, RGBA (8 bits por componente)
 	glGenTextures(1, &tex);
 	glBindTexture(GL_TEXTURE_2D, tex);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

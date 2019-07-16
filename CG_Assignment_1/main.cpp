@@ -1,11 +1,12 @@
 #include "main.h"
 
-//-----------------------------------------------------------------------------
+
+
 void MyGlDraw(void)
 {
-	//*************************************************************************
-	// Chame aqui as funções do mygl.h
-	//*************************************************************************
+	// Funções do mygl.h
+
+
 
 	pixel p0, p1;
 
@@ -23,16 +24,20 @@ void MyGlDraw(void)
 	p0.RGBA[2] = 0;
 	p0.RGBA[3] = 0;
 
-	for (int i = 0; i < 55; i++) {
+	for (int i = 0; i < 55; i++)
+	{
 		PutPixel(p0);
 		p0.y += 10;
-		if (i >= 22 && i <= 32) {
+
+		if (i >= 22 && i <= 32)
+		{
 			p0.RGBA[0] = 255;
 			p0.RGBA[1] = 0;
 			p0.RGBA[2] = 0;
 			p0.RGBA[3] = 0;
 		}
-		else {
+		else
+		{
 			p0.RGBA[0] = 255;
 			p0.RGBA[1] = 255;
 			p0.RGBA[2] = 0;
@@ -48,16 +53,20 @@ void MyGlDraw(void)
 	p1.RGBA[2] = 0;
 	p1.RGBA[3] = 0;
 
-	for (int i = 0; i < 52; i++) {
+	for (int i = 0; i < 52; i++)
+	{
 		PutPixel(p1);
 		p1.x += 10;
-		if (i >= 22 && i <= 32) {
+
+		if (i >= 22 && i <= 32)
+		{
 			p1.RGBA[0] = 255;
 			p1.RGBA[1] = 0;
 			p1.RGBA[2] = 0;
 			p1.RGBA[3] = 0;
 		}
-		else {
+		else
+		{
 			p1.RGBA[0] = 255;
 			p1.RGBA[1] = 255;
 			p1.RGBA[2] = 0;
@@ -441,7 +450,7 @@ void MyGlDraw(void)
 //-----------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
-	// Inicializações.
+	// Inicializações
 	InitOpenGL(&argc, argv);
 	InitCallBacks();
 	InitDataStructures();
@@ -449,7 +458,7 @@ int main(int argc, char **argv)
 	// Ajusta a função que chama as funções do mygl.h
 	DrawFunc = MyGlDraw;
 
-	// Framebuffer scan loop.
+	// Framebuffer scan loop
 	glutMainLoop();
 
 	return 0;
