@@ -35,3 +35,5 @@ ipch/
 *.sdf
 *.cachefile
 *.VC.db
+*.iobj
+*.ipdb

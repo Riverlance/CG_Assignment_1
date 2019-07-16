@@ -35,15 +35,15 @@ void PutPixel(pixel p)
 
 float distancia(pixel p0, pixel p1)
 {
-	return sqrt((p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p0.y) * (p1.y - p0.y));
+	return (float) sqrt((p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p0.y) * (p1.y - p0.y));
 }
 
 pixel interpolacaoCor(float p, pixel p0, pixel p1, pixel aux)
 {
-	aux.RGBA[0] = p0.RGBA[0] * p + (1 - p)*p1.RGBA[0];
-	aux.RGBA[1] = p0.RGBA[1] * p + (1 - p)*p1.RGBA[1];
-	aux.RGBA[2] = p0.RGBA[2] * p + (1 - p)*p1.RGBA[2];
-	aux.RGBA[3] = p0.RGBA[3] * p + (1 - p)*p1.RGBA[3];
+	aux.RGBA[0] = (int) (p0.RGBA[0] * p + (1 - p)*p1.RGBA[0]);
+	aux.RGBA[1] = (int) (p0.RGBA[1] * p + (1 - p)*p1.RGBA[1]);
+	aux.RGBA[2] = (int) (p0.RGBA[2] * p + (1 - p)*p1.RGBA[2]);
+	aux.RGBA[3] = (int) (p0.RGBA[3] * p + (1 - p)*p1.RGBA[3]);
 	return aux;
 }
 
