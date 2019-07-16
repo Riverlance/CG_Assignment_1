@@ -4,13 +4,11 @@ Algoritmos de rasterização
 
 ## Sumário
 
-<!--
 * [Introdução](#introdução)
 * [Rasterização de pontos](#rasterização-de-pontos)
 * [Rasterização de retas](#rasterização-de-retas)
 * [Desenho de triângulos](#desenho-de-triângulos)
 * [Referências](#referências)
--->
 
 ---
 
@@ -216,7 +214,6 @@ Para melhor exemplificar uma captura de tela do algoritmo acima sendo executado 
   <br>
   <img src="./img/drawline.png"/>
   <h5 align="center">Figura 3 - DrawLine para o primeiro octante</h5>
-  <br>
 </p>
 
 Para generalizar o algoritmo deve-se:
@@ -232,7 +229,6 @@ Para verificar as expressões condicionais é interessante seguir a seguinte tab
   <br>
   <img src="./img/BresenhamGeneralization.png"/>
   <h5 align="center">Figura 4 - Representação de Bresenham nos octantes</h5>
-  <br>
 </p>
 
 Como resultado temos:
@@ -241,9 +237,7 @@ Como resultado temos:
   <br>
   <img src="./img/BresenhamGeneralized.png"/>
   <h5 align="center">Figura 5 - Bresenham generalizado</h5>
-  <br>
 </p>
-
 
 ## Desenho de triângulos
 
@@ -290,3 +284,29 @@ void drawTriangle(pixel p0, pixel p1, pixel p2)
   }
 }
 ```
+
+<p align="center">
+  <br>
+  <img src="./img/drawTriangle.png"/>
+  <h5 align="center">Figura 6 -Linhas interpoladas</h5>
+</p>
+
+## Interpolação de cores
+
+Para concluir, foi adicionado ao algoritmo de linha a funcionalidade de interpolação de cores.
+Para realizar uma mudança gradual foi calculada a variação entre a cor inicial e final sobre os pixels da reta x. ```VARIACAO = (COR_INICIA - COR_FINAL) / QTDE_DE_PIXELS```
+Sabendo de tal variação devemos incrementar o valor de cada novo pixel a este valor.
+O resultado é o seguinte:
+
+<p align="center">
+  <br>
+  <img src="./img/DrawRectInterpolated.png"/>
+  <h5 align="center">Figura 7 - Rasterização de triângulos</h5>
+  <br>
+</p>
+
+## Referências
+
+* [https://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html](https://www.cs.helsinki.fi/group/goa/mallinnus/lines/bresenh.html)
+* [https://en.wikipedia.org/wiki/Bresenham's_line_algorithm](https://en.wikipedia.org/wiki/Bresenham's_line_algorithm)
+* [https://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm](https://www.tutorialspoint.com/computer_graphics/line_generation_algorithm.htm)
