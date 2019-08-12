@@ -1,9 +1,18 @@
-#ifndef _DEFINITIONS_H_
-#define _DEFINITIONS_H_
+/**
+ * Computer Graphics - Assignment 1
+ * Copyright (C) 2019  Gabriel Moraes de Oliveira <biel94moraes@msn.com>
+ */
 
-#define IMAGE_WIDTH  512 // Número de colunas da imagem
-#define IMAGE_HEIGHT 512 // Número de linhas da imagem
 
-unsigned char * FBptr;
+
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
+
+// Basic includes
+#include <iostream> // eg, std::cout
+#include <cmath> // std::abs
+
+#define SCREEN_WIDTH  512
+#define SCREEN_HEIGHT 512
 
 #endif

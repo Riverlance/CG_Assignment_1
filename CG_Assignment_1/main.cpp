@@ -1,32 +1,36 @@
-#include "main.h"
+/**
+ * Computer Graphics - Assignment 1
+ * Copyright (C) 2019  Gabriel Moraes de Oliveira <biel94moraes@msn.com>
+ */
 
 
 
-void MyGlDraw(void)
+#include "mygl.h"
+
+#include "point.h" // lixo
+
+
+//lixo
+void drawB()
 {
-	// Funções do mygl.h
+	Point pointA;
+    Point pointB;
 
+    /**
+      *	Cena 1
+      */
+    /*
+    pointA.setX(255);
+    pointA.setY(0);
 
-
-	pixel p0, p1;
-
-
-
-	/**
-	*	Cena 1
-	*/
-	/*
-	p0.x = 255;
-	p0.y = 0;
-
-	p0.RGBA[0] = 255;
-	p0.RGBA[1] = 255;
-	p0.RGBA[2] = 0;
-	p0.RGBA[3] = 0;
+    pointAColor.setR(255);
+    pointAColor.setG(255);
+    pointAColor.setB(0);
+    pointAColor.setA(0);
 
 	for (int i = 0; i < 55; i++)
 	{
-		PutPixel(p0);
+		draw(p0);
 		p0.y += 10;
 
 		if (i >= 22 && i <= 32)
@@ -73,7 +77,7 @@ void MyGlDraw(void)
 			p1.RGBA[3] = 0;
 		}
 	}
-	*/
+    */
 
 
 
@@ -395,6 +399,7 @@ void MyGlDraw(void)
 	/**
 	*	Cena 5
 	*/
+    /*
 	p0.x = 0;
 	p0.y = 1;
 
@@ -445,21 +450,14 @@ void MyGlDraw(void)
 	p1.RGBA[3]= 0;
 
 	drawline(p0,p1);
+    */
 }
 
-//-----------------------------------------------------------------------------
-int main(int argc, char **argv)
+
+
+int main(int argc, char* argv[])
 {
-	// Inicializações
-	InitOpenGL(&argc, argv);
-	InitCallBacks();
-	InitDataStructures();
+  MyGL* myGL = MyGL::getInstance(&argc, argv);
 
-	// Ajusta a função que chama as funções do mygl.h
-	DrawFunc = MyGlDraw;
-
-	// Framebuffer scan loop
-	glutMainLoop();
-
-	return 0;
+  return 0;
 }
