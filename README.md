@@ -4,6 +4,7 @@ Algoritmos de rasterização
 
 ## Sumário
 
+* [Notas](#notas)
 * [Introdução](#introdução)
 * [Rasterização de pontos](#rasterização-de-pontos)
 * [Rasterização de retas](#rasterização-de-retas)
@@ -11,6 +12,16 @@ Algoritmos de rasterização
 * [Referências](#referências)
 
 ---
+
+## Notas
+
+* Pré-requisitos: Visual Studio 2015 Update 2.
+
+1. Para compilar o projeto, é preciso escolher um o método de compilação entre `Release` ou `Debug`, e também o tipo de Sistema Operacional entre `x64` ou `x86`.
+2. Após isso, copie as dll da pasta `CG_Assignment_1\src\binary\glew-2.0.0\bin\x64\` (ou x86, dependendo da sua escolha do passo 1) e cole na pasta `CG_Assignment_1\` (mesma pasta em que este `README` se encontra). O nome da dll deve manter-se `glew32_x64.dll` ou `glew32_x86.dll`.
+3. Copie também as dll da pasta `CG_Assignment_1\src\binary\freeglut\bin\x64\` (ou da pasta anterior para x86, dependendo da sua escolha do passo 1) e cole na pasta `CG_Assignment_1\` (mesma pasta em que este `README` se encontra). O nome da dll deve manter-se `freeglut.dll`, independente da escolha do passo 1.
+
+* As dlls do GLEW (para x64 e x86) e a dll do FreeGlut (apenas para x64) já estão na pasta `CG_Assignment_1`.
 
 ## Introdução
 
