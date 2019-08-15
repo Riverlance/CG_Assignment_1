@@ -10,34 +10,20 @@
 
 
 
-Point::Point(const int x /*= 0*/, const int y /*= 0*/)
+std::ostream& operator<<(std::ostream& os, const Point& point)
 {
-  this->x = x;
-  this->y = y;
-  this->color = Color(0, 0, 0, 0);
-}
+  os << "Point";
 
-Point::Point(const Color color, const int x /*= 0*/, const int y /*= 0*/)
-{
-  this->x = x;
-  this->y = y;
-  this->color = color;
-}
+  // Position
+  os << "(" << std::setw(5) << std::setfill('0') << std::dec << point.getX();
+  os << ", " << std::setw(5) << std::setfill('0') << std::dec << point.getY();
+  os << ")";
 
+  os << ":";
 
+  // Color
+  const Color& color = point.getColor();
+  os << point.getColor();
 
-bool Point::isValid() const
-{
-  return x >= 0 && x <= SCREEN_WIDTH && y >= 0 && y <= SCREEN_HEIGHT;
-}
-
-int Point::getMemoryPosition()
-{
-  return (x + y * SCREEN_WIDTH) * 4;
-}
-
-void Point::toString()
-{
-  std::cout << "XY(" << x << ", " << y << ")" << std::endl;
-  //color.toString();
+  return os;
 }

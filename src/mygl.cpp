@@ -20,72 +20,76 @@ unsigned char *frameBuffer;
 
 void drawArt(int id)
 {
-
   // Random black and white pixels
   if (id == 0)
   {
     Point pointA;
+    Color& colorA = pointA.getColor();
 
     // Black
-    pointA.color.setRGB();
+    colorA.setRGB();
 
     // Column
     for (int y = 0; y < SCREEN_HEIGHT; y++)
     {
-      pointA.y = y;
+      pointA.setY(y);
 
       // Row
       for (int x = 0; x < SCREEN_WIDTH; x++)
       {
-        pointA.x = x;
+        pointA.setX(x);
 
         // Random color for each point
         unsigned char lightnessPixel = 1 + std::rand() / ((RAND_MAX + 1u) / 255);
-        pointA.color.setRGB(lightnessPixel, lightnessPixel, lightnessPixel);
+        colorA.setRGB(lightnessPixel, lightnessPixel, lightnessPixel);
 
         MyGL::drawPoint(pointA);
       }
     }
 
   }
+
+
+
   // Random colored pixels
   else if (id == 1)
   {
     Point pointA;
     Point pointB;
+    Color& colorA = pointA.getColor();
 
     // Black
-    pointA.color.setRGB();
+    colorA.setRGB();
 
     // Column
     for (int y = 0; y < SCREEN_HEIGHT; y++)
     {
-      pointA.y = y;
+      pointA.setY(y);
 
       // Row
       for (int x = 0; x < SCREEN_WIDTH; x++)
       {
-        pointA.x = x;
+        pointA.setX(x);
 
         // Random color for each point
-        pointA.color.setRGB(1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255));
+        colorA.setRGB(1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255));
 
         MyGL::drawPoint(pointA);
       }
     }
   }
+
+
+
   // Dotted lines
   else if (id == 2)
   {
-    Point pointA;
-    Point pointB;
+    Point pointA(255, 0);
+    Point pointB(0, 255);
 
-    pointA.x = 255;
-    pointA.y = 0;
-
-    pointB.x = 0;
-    pointB.y = 255;
-
+    Color& colorA = pointA.getColor();
+    Color& colorB = pointB.getColor();
+    
     int windowSize = SCREEN_WIDTH;
     int pointsDistance = 8;
     int pointsCountPerLine = (int)(windowSize / pointsDistance);
@@ -98,32 +102,24 @@ void drawArt(int id)
       MyGL::drawPoint(pointA);
       MyGL::drawPoint(pointB);
 
-      pointA.y += 8;
-      pointB.x += 8;
+      pointA.setY(pointA.getY() + pointsDistance);
+      pointB.setX(pointB.getX() + pointsDistance);
 
       if (i > xRedMargin && i < yRedMargin)
       {
-        // Random
-        pointA.color.setR(1 + std::rand() / ((RAND_MAX + 1u) / 255));
-        pointA.color.setG(1 + std::rand() / ((RAND_MAX + 1u) / 255));
-        pointA.color.setB(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+        // Random color
+        colorA.setRGB(1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255));
 
-        // Random
-        pointB.color.setR(1 + std::rand() / ((RAND_MAX + 1u) / 255));
-        pointB.color.setG(1 + std::rand() / ((RAND_MAX + 1u) / 255));
-        pointB.color.setB(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+        // Random color
+        colorB.setRGB(1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255));
       }
       else
       {
-        // Yellow
-        pointA.color.setR(255);
-        pointA.color.setG(255);
-        pointA.color.setB(0);
+        // Yellow color
+        colorA.setRGB(255, 255, 0);
 
-        // Yellow
-        pointB.color.setR(255);
-        pointB.color.setG(255);
-        pointB.color.setB(0);
+        // Yellow color
+        colorB.setRGB(255, 255, 0);
       }
     }
   }
@@ -298,14 +294,18 @@ void MyGL::drawPoint(Point point)
   }
 
   int memoryPosition = point.getMemoryPosition();
+  const Color& color = point.getColor();
   for (int i = 0; i < 4; i++)
-    frameBuffer[memoryPosition++] = point.color.getRGBA(i);
+    frameBuffer[memoryPosition++] = color.getRGBA(i);
 }
 
 void MyGL::drawLine(Point initialPoint, Point finalPoint)
 {
-  int xDistance = finalPoint.x - initialPoint.x;
-  int yDistance = finalPoint.y - initialPoint.y;
+  Color& initialColor = initialPoint.getColor();
+  Color& finalColor = finalPoint.getColor();
+
+  int xDistance = finalPoint.getX() - initialPoint.getX();
+  int yDistance = finalPoint.getY() - initialPoint.getY();
 
   int xAxisDirection = xDistance < 0 ? -1 : (xDistance > 0 ? 1 : 0);
   int yAxisDirection = yDistance < 0 ? -1 : (yDistance > 0 ? 1 : 0);
@@ -315,13 +315,13 @@ void MyGL::drawLine(Point initialPoint, Point finalPoint)
   int xInitialIncrement = 0;
   int xFinalIncrement = 0;
   int fAxis = std::abs(xDistance);
-  int currentX = initialPoint.x;
+  int currentX = initialPoint.getX();
 
   // Coordinate y
   int yInitialIncrement = 0;
   int yFinalIncrement = 0;
   int sAxis = std::abs(yDistance);
-  int currentY = initialPoint.y;
+  int currentY = initialPoint.getY();
   yInitialIncrement = (yDistance < 0 ? -1 : (yDistance > 0 ? 1 : 0));
 
   if (fAxis < sAxis)
@@ -335,23 +335,23 @@ void MyGL::drawLine(Point initialPoint, Point finalPoint)
 
   double variance[4] =
   {
-    (double)(finalPoint.color.getR() - initialPoint.color.getR()) / fAxis,
-    (double)(finalPoint.color.getG() - initialPoint.color.getG()) / fAxis,
-    (double)(finalPoint.color.getB() - initialPoint.color.getB()) / fAxis,
-    (double)(finalPoint.color.getA() - initialPoint.color.getA()) / fAxis
+    (double)(finalColor.getR() - initialColor.getR()) / fAxis,
+    (double)(finalColor.getG() - initialColor.getG()) / fAxis,
+    (double)(finalColor.getB() - initialColor.getB()) / fAxis,
+    (double)(finalColor.getA() - initialColor.getA()) / fAxis
   };
 
   double newColor[4] =
   {
-    (double)initialPoint.color.getR(),
-    (double)initialPoint.color.getG(),
-    (double)initialPoint.color.getB(),
-    (double)initialPoint.color.getA()
+    (double)initialColor.getR(),
+    (double)initialColor.getG(),
+    (double)initialColor.getB(),
+    (double)initialColor.getA()
   };
 
   for (int i = 0; i <= fAxis; ++i)
   {
-    drawPoint(Point(Color((const unsigned char)newColor[0], (const unsigned char)newColor[1], (const unsigned char)newColor[2], (const unsigned char)newColor[3]), currentX, currentY));
+    drawPoint(Point(currentX, currentY, Color((const unsigned char)newColor[0], (const unsigned char)newColor[1], (const unsigned char)newColor[2], (const unsigned char)newColor[3])));
 
     newColor[0] += variance[0];
     newColor[1] += variance[1];
