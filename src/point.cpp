@@ -6,7 +6,7 @@
 
 
 #include "point.h"
-#include "definitions.h"
+#include "core\base\definitions.h"
 
 
 

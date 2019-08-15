@@ -9,7 +9,7 @@
 #define POINT_H
 
 #include "color.h"
-#include "definitions.h"
+#include "core\base\definitions.h"
 
 
 

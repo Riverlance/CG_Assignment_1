@@ -8,8 +8,8 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include "definitions.h"
-#include "global.h"
+#include "core\base\definitions.h"
+#include "core\base\global.h"
 
 
 

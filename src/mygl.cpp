@@ -6,7 +6,7 @@
 
 
 #include "mygl.h"
-#include "definitions.h"
+#include "core\base\definitions.h"
 
 
 
