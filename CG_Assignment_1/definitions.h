@@ -15,4 +15,7 @@
 #define SCREEN_WIDTH  512
 #define SCREEN_HEIGHT 512
 
+// Display hexadecimal value on color prints
+#define COLOR_STRING_HEXADECIMAL
+
 #endif

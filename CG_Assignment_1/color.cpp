@@ -6,30 +6,28 @@
 
 
 #include "color.h"
-#include "definitions.h"
 
 
 
-Color::Color(const unsigned char r /*= 0*/, const unsigned char g /*= 0*/, const unsigned char b /*= 0*/, const unsigned char a /*= 0*/)
+std::ostream& operator<<(std::ostream& os, const Color& color)
 {
-  rgba[0] = r;
-  rgba[1] = g;
-  rgba[2] = b;
-  rgba[3] = a;
-}
+  os << "RGBA";
 
-Color& Color::operator+(const Color& other)
-{
-  rgba[0] += other.rgba[0];
-  rgba[1] += other.rgba[1];
-  rgba[2] += other.rgba[2];
-  rgba[3] += other.rgba[3];
-  return *this;
-}
+  // Decimal format
+  os << "(" << std::setw(3) << std::setfill('0') << std::dec << (uint16_t)color.getR();
+  os << ", " << std::setw(3) << std::setfill('0') << std::dec << (uint16_t)color.getG();
+  os << ", " << std::setw(3) << std::setfill('0') << std::dec << (uint16_t)color.getB();
+  os << ", " << std::setw(3) << std::setfill('0') << std::dec << (uint16_t)color.getA();
+  os << ")";
 
+  // Hexadecimal format
+#ifdef COLOR_STRING_HEXADECIMAL
+  os << "(0x" << std::setw(2) << std::hex << std::uppercase << +color.getR();
+  os << std::setw(2) << std::hex << std::uppercase << +color.getG();
+  os << std::setw(2) << std::hex << std::uppercase << +color.getB();
+  os << std::setw(2) << std::hex << std::uppercase << +color.getA();
+  os << ")";
+#endif
 
-
-void Color::toString()
-{
-  std::cout << "RGBA(" << (uint16_t)rgba[0] << ", " << (uint16_t)rgba[1] << ", " << (uint16_t)rgba[2] << ", " << (uint16_t)rgba[3] << ")" << std::endl;
+  return os;
 }

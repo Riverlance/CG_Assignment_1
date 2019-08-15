@@ -18,54 +18,123 @@ unsigned char *frameBuffer;
 
 
 
-void draw()
+void drawArt(int id)
 {
-  Point pointA;
-  Point pointB;
 
-  pointA.x = 255;
-  pointA.y = 0;
-
-  pointB.x = 0;
-  pointB.y = 255;
-  
-  for (int i = 1; i < 51; i++)
+  // Random black and white pixels
+  if (id == 0)
   {
-    MyGL::drawPoint(pointA);
-    MyGL::drawPoint(pointB);
+    Point pointA;
 
-    pointA.y += 10;
-    pointB.x += 10;
-    
-    if (i > 18 && i < 33)
+    // Black
+    pointA.color.setRGB();
+
+    // Column
+    for (int y = 0; y < SCREEN_HEIGHT; y++)
     {
-      // Red
-      pointA.color.rgba[0] = 255;
-      pointA.color.rgba[1] = 0;
-      pointA.color.rgba[2] = 0;
-      pointA.color.rgba[3] = 0;
+      pointA.y = y;
 
-      // Red
-      pointB.color.rgba[0] = 255;
-      pointB.color.rgba[1] = 0;
-      pointB.color.rgba[2] = 0;
-      pointB.color.rgba[3] = 0;
+      // Row
+      for (int x = 0; x < SCREEN_WIDTH; x++)
+      {
+        pointA.x = x;
+
+        // Random color for each point
+        unsigned char lightnessPixel = 1 + std::rand() / ((RAND_MAX + 1u) / 255);
+        pointA.color.setRGB(lightnessPixel, lightnessPixel, lightnessPixel);
+
+        MyGL::drawPoint(pointA);
+      }
     }
-    else
-    {
-      // Yellow
-      pointA.color.rgba[0] = 255;
-      pointA.color.rgba[1] = 255;
-      pointA.color.rgba[2] = 0;
-      pointA.color.rgba[3] = 0;
 
-      // Yellow
-      pointB.color.rgba[0] = 255;
-      pointB.color.rgba[1] = 255;
-      pointB.color.rgba[2] = 0;
-      pointB.color.rgba[3] = 0;
+  }
+  // Random colored pixels
+  else if (id == 1)
+  {
+    Point pointA;
+    Point pointB;
+
+    // Black
+    pointA.color.setRGB();
+
+    // Column
+    for (int y = 0; y < SCREEN_HEIGHT; y++)
+    {
+      pointA.y = y;
+
+      // Row
+      for (int x = 0; x < SCREEN_WIDTH; x++)
+      {
+        pointA.x = x;
+
+        // Random color for each point
+        pointA.color.setRGB(1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255), 1 + std::rand() / ((RAND_MAX + 1u) / 255));
+
+        MyGL::drawPoint(pointA);
+      }
     }
   }
+  // Dotted lines
+  else if (id == 2)
+  {
+    Point pointA;
+    Point pointB;
+
+    pointA.x = 255;
+    pointA.y = 0;
+
+    pointB.x = 0;
+    pointB.y = 255;
+
+    int windowSize = SCREEN_WIDTH;
+    int pointsDistance = 8;
+    int pointsCountPerLine = (int)(windowSize / pointsDistance);
+    int redPointsInLine = 7;
+    int xRedMargin = (int)std::floor((pointsCountPerLine - 1) / 2) - (redPointsInLine + 1);
+    int yRedMargin = (int)std::ceil((pointsCountPerLine - 1) / 2) + (redPointsInLine + 1);
+
+    for (int i = 0; i < pointsCountPerLine; i++)
+    {
+      MyGL::drawPoint(pointA);
+      MyGL::drawPoint(pointB);
+
+      pointA.y += 8;
+      pointB.x += 8;
+
+      if (i > xRedMargin && i < yRedMargin)
+      {
+        // Random
+        pointA.color.setR(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+        pointA.color.setG(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+        pointA.color.setB(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+
+        // Random
+        pointB.color.setR(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+        pointB.color.setG(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+        pointB.color.setB(1 + std::rand() / ((RAND_MAX + 1u) / 255));
+      }
+      else
+      {
+        // Yellow
+        pointA.color.setR(255);
+        pointA.color.setG(255);
+        pointA.color.setB(0);
+
+        // Yellow
+        pointB.color.setR(255);
+        pointB.color.setG(255);
+        pointB.color.setB(0);
+      }
+    }
+  }
+}
+
+
+
+void draw()
+{
+  // Choose an art id
+  drawArt(2);
 }
 
 void onExitApplication()
@@ -77,7 +146,7 @@ void onExitApplication()
   std::clog << "Exiting..." << std::endl;
 }
 
-void onDisplay()
+void update()
 {
   // Custom function to draw
   draw();
@@ -97,17 +166,30 @@ void onDisplay()
   // Set view port
   glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
+  // glRotatef(0.7f, 0, 0, 1);
+
+  // 2 triangles for display texture on it
   glBegin(GL_TRIANGLES);
+    // North-West Triangle
+    // Vertex
+    //glColor3f(1.0f, 0.0f, 0.0f); // For drawing this color directly by OpenGL
     glTexCoord2f(0.0f, 1.0f);
     glVertex3f(-1.0f, -1.0f, 0.0f);
+    // Vertex
     glTexCoord2f(1.0f, 0.0f);
     glVertex3f(1.0f, 1.0f, 0.0f);
+    // Vertex
     glTexCoord2f(0.0f, 0.0f);
     glVertex3f(-1.0f, 1.0f, 0.0f);
+
+    // South-East Triangle
+    // Vertex
     glTexCoord2f(0.0f, 1.0f);
     glVertex3f(-1.0f, -1.0f, 0.0f);
+    // Vertex
     glTexCoord2f(1.0f, 1.0f);
     glVertex3f(1.0f, -1.0f, 0.0f);
+    // Vertex
     glTexCoord2f(1.0f, 0.0f);
     glVertex3f(1.0f, 1.0f, 0.0f);
   glEnd();
@@ -129,9 +211,13 @@ MyGL::MyGL(int* argc, char* argv[])
   /* Glut */
 
   glutInit(argc, argv);
-  glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+  unsigned int displayModeFlags = 0;
+  displayModeFlags |= GLUT_DOUBLE; // Flag for duplicate color buffer
+  displayModeFlags |= GLUT_RGBA; // Flag for create color buffer (duplicated because of previous flag)
+  displayModeFlags |= GLUT_DEPTH; // Depth buffer (Z-Buffer)
+  glutInitDisplayMode(displayModeFlags);
   glutInitWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-  glutInitWindowPosition(0, 0); // 100, 100
+  glutInitWindowPosition(400, 300); // Position of window on user's screen
   glutCreateWindow("My OpenGL");
 
 
@@ -161,7 +247,7 @@ MyGL::MyGL(int* argc, char* argv[])
   atexit(onExitApplication);
 
   // Set display callback
-  glutDisplayFunc(onDisplay);
+  glutDisplayFunc(update);
 
 
 
@@ -193,7 +279,7 @@ MyGL::MyGL(int* argc, char* argv[])
   /* Loop */
 
   // Framebuffer scan loop
-  glutMainLoop();
+  glutMainLoop(); // Calls display function in loop
 }
 
 MyGL::~MyGL()
@@ -213,23 +299,27 @@ void MyGL::drawPoint(Point point)
 
   int memoryPosition = point.getMemoryPosition();
   for (int i = 0; i < 4; i++)
-    frameBuffer[memoryPosition++] = point.color.rgba[i];
+    frameBuffer[memoryPosition++] = point.color.getRGBA(i);
 }
 
 void MyGL::drawLine(Point initialPoint, Point finalPoint)
 {
+  int xDistance = finalPoint.x - initialPoint.x;
+  int yDistance = finalPoint.y - initialPoint.y;
+
+  int xAxisDirection = xDistance < 0 ? -1 : (xDistance > 0 ? 1 : 0);
+  int yAxisDirection = yDistance < 0 ? -1 : (yDistance > 0 ? 1 : 0);
+
+
   // Coordinate x
   int xInitialIncrement = 0;
   int xFinalIncrement = 0;
-  int xDistance = finalPoint.x - initialPoint.x;
   int fAxis = std::abs(xDistance);
   int currentX = initialPoint.x;
-  xInitialIncrement = xFinalIncrement = (xDistance < 0 ? -1 : (xDistance > 0 ? 1 : 0));
 
   // Coordinate y
   int yInitialIncrement = 0;
   int yFinalIncrement = 0;
-  int yDistance = finalPoint.y - initialPoint.y;
   int sAxis = std::abs(yDistance);
   int currentY = initialPoint.y;
   yInitialIncrement = (yDistance < 0 ? -1 : (yDistance > 0 ? 1 : 0));
@@ -245,18 +335,18 @@ void MyGL::drawLine(Point initialPoint, Point finalPoint)
 
   double variance[4] =
   {
-    (double)(finalPoint.color.rgba[0] - initialPoint.color.rgba[0]) / fAxis,
-    (double)(finalPoint.color.rgba[1] - initialPoint.color.rgba[1]) / fAxis,
-    (double)(finalPoint.color.rgba[2] - initialPoint.color.rgba[2]) / fAxis,
-    (double)(finalPoint.color.rgba[3] - initialPoint.color.rgba[3]) / fAxis
+    (double)(finalPoint.color.getR() - initialPoint.color.getR()) / fAxis,
+    (double)(finalPoint.color.getG() - initialPoint.color.getG()) / fAxis,
+    (double)(finalPoint.color.getB() - initialPoint.color.getB()) / fAxis,
+    (double)(finalPoint.color.getA() - initialPoint.color.getA()) / fAxis
   };
 
   double newColor[4] =
   {
-    (double)initialPoint.color.rgba[0],
-    (double)initialPoint.color.rgba[1],
-    (double)initialPoint.color.rgba[2],
-    (double)initialPoint.color.rgba[3]
+    (double)initialPoint.color.getR(),
+    (double)initialPoint.color.getG(),
+    (double)initialPoint.color.getB(),
+    (double)initialPoint.color.getA()
   };
 
   for (int i = 0; i <= fAxis; ++i)

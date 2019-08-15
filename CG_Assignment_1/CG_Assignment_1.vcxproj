@@ -134,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="color.h" />
     <ClInclude Include="definitions.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="mygl.h" />
     <ClInclude Include="point.h" />
   </ItemGroup>

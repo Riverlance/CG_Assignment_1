@@ -39,5 +39,5 @@ int Point::getMemoryPosition()
 void Point::toString()
 {
   std::cout << "XY(" << x << ", " << y << ")" << std::endl;
-  color.toString();
+  //color.toString();
 }
