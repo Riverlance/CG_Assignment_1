@@ -17,8 +17,12 @@ struct Color
 {
   public:
     Color() = default;
-    Color(unsigned char r, unsigned char g, unsigned char b) : rgba{ r, g, b, 0x00 } {}
-    Color(unsigned char r, unsigned char g, unsigned char b, unsigned char a) : rgba{ r, g, b, a } {}
+    Color(uint8_t r, uint8_t g, uint8_t b) : rgba{ r, g, b, 0xFF } {}
+    Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a) : rgba{ r, g, b, a } {}
+    Color(const Color& color)
+    {
+      std::copy(std::begin(color.rgba), std::end(color.rgba), std::begin(rgba));
+    }
 
 
 
@@ -44,23 +48,23 @@ struct Color
 
 
 
-    inline unsigned char getR() const { return rgba[0]; }
-    inline unsigned char getG() const { return rgba[1]; }
-    inline unsigned char getB() const { return rgba[2]; }
-    inline unsigned char getA() const { return rgba[3]; }
-    inline unsigned char getRGBA(uint_fast8_t i) const { return rgba[i]; }
+    inline uint_fast8_t getR() const { return rgba[0]; }
+    inline uint_fast8_t getG() const { return rgba[1]; }
+    inline uint_fast8_t getB() const { return rgba[2]; }
+    inline uint_fast8_t getA() const { return rgba[3]; }
+    inline uint_fast8_t getRGBA(uint_fast8_t i) const { return rgba[i]; }
 
-    inline void setR(unsigned char r) { rgba[0] = r; }
-    inline void setG(unsigned char g) { rgba[1] = g; }
-    inline void setB(unsigned char b) { rgba[2] = b; }
-    inline void setA(unsigned char a) { rgba[3] = a; }
-    inline void setRGB(unsigned char r = 0x00, unsigned char g = 0x00, unsigned char b = 0x00)
+    inline void setR(uint_fast8_t r) { rgba[0] = r; }
+    inline void setG(uint_fast8_t g) { rgba[1] = g; }
+    inline void setB(uint_fast8_t b) { rgba[2] = b; }
+    inline void setA(uint_fast8_t a) { rgba[3] = a; }
+    inline void setRGB(uint_fast8_t r = 0x00, uint_fast8_t g = 0x00, uint_fast8_t b = 0x00)
     {
       rgba[0] = r;
       rgba[1] = g;
       rgba[2] = b;
     }
-    inline void setRGBA(unsigned char r = 0x00, unsigned char g = 0x00, unsigned char b = 0x00, unsigned char a = 0x00)
+    inline void setRGBA(uint_fast8_t r = 0x00, uint_fast8_t g = 0x00, uint_fast8_t b = 0x00, uint_fast8_t a = 0xFF)
     {
       rgba[0] = r;
       rgba[1] = g;
@@ -68,10 +72,42 @@ struct Color
       rgba[3] = a;
     }
 
+    inline void addRGB(uint_fast8_t r = 0x00, uint_fast8_t g = 0x00, uint_fast8_t b = 0x00)
+    {
+      rgba[0] += r;
+      rgba[1] += g;
+      rgba[2] += b;
+    }
+    inline void addRGBA(uint_fast8_t r = 0x00, uint_fast8_t g = 0x00, uint_fast8_t b = 0x00, uint_fast8_t a = 0xFF)
+    {
+      rgba[0] += r;
+      rgba[1] += g;
+      rgba[2] += b;
+      rgba[3] += a;
+    }
+
+
+
+    inline void setRandomGreyScale(uint_fast8_t alpha = 0xFF)
+    {
+      uint_fast8_t lightnessColor = (uint_fast8_t)getRandom(0x00, 0xFF);
+      rgba[0] = lightnessColor;
+      rgba[1] = lightnessColor;
+      rgba[2] = lightnessColor;
+      rgba[3] = alpha;
+    }
+    inline void setRandomRGBA(uint_fast8_t alpha = 0xFF)
+    {
+      rgba[0] = (uint_fast8_t)getRandom(0x00, 0xFF);
+      rgba[1] = (uint_fast8_t)getRandom(0x00, 0xFF);
+      rgba[2] = (uint_fast8_t)getRandom(0x00, 0xFF);
+      rgba[3] = alpha;
+    }
+
 
 
   private:
-    unsigned char rgba[4] = {};
+    uint8_t rgba[4] = { 0x00, 0x00, 0x00, 0xFF};
 };
 
 std::ostream& operator<<(std::ostream& os, const Color& obj);

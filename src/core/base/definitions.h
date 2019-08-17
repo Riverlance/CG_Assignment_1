@@ -12,8 +12,8 @@
 #include <iostream> // eg, std::cout
 #include <cmath> // std::abs
 
-#define SCREEN_WIDTH  512
-#define SCREEN_HEIGHT 512
+static uint16_t SCREEN_WIDTH  = 800;
+static uint16_t SCREEN_HEIGHT = 600;
 
 // Display hexadecimal value on color prints
 #define COLOR_STRING_HEXADECIMAL

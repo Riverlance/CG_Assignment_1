@@ -19,6 +19,7 @@ struct Point
     Point() = default;
     Point(uint16_t x, uint16_t y) : x(x), y(y) {};
     Point(uint16_t x, uint16_t y, const Color& color) : x(x), y(y), color(color) {};
+    Point(const Point& point) : x(point.x), y(point.y), color(point.color) {}
 
 
 
@@ -113,6 +114,14 @@ struct Point
       this->y = y;
     }
     inline void setColor(const Color& color) { this->color = color; }
+
+    inline void addX(int_fast32_t x) { this->x += x; }
+    inline void addY(int_fast32_t y) { this->y += y; }
+    inline void addXY(int_fast32_t x, int_fast32_t y)
+    {
+      this->x += x;
+      this->y += y;
+    }
 
 
 

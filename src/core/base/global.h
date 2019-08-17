@@ -69,4 +69,11 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+
+
+static const int getRandom(int begin = 0, int end = 0)
+{
+  return begin + std::rand() / ((RAND_MAX + 1U) / end);
+}
+
 #endif

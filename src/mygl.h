@@ -44,8 +44,9 @@ class MyGL
 
 
     // Draw
+    static void clearTexture();
     static void drawPoint(Point point);
-    static void drawLine(Point initialPoint, Point finalPoint);
+    static void drawLine(Point initialPoint, Point finalPoint, bool initialPointColor = true);
     static void drawTriangle(Point pointA, Point pointB, Point pointC);
 };
 
