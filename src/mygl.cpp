@@ -462,7 +462,7 @@ void MyGL::drawPoint(Point point)
 {
   if (!point.isValid())
   {
-    //std::cerr << "Point of coordinates XY(" << point.x << ", " << point.y << ")" << std::endl;
+    //std::cerr << "Point of coordinates XY(" << point.getX() << ", " << point.getY() << ") is invalid." << std::endl;
     return;
   }
 
